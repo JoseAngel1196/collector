@@ -1,0 +1,9 @@
+astroid==2.5
+isort==5.8.0
+lazy-object-proxy==1.6.0
+mccabe==0.6.1
+pydantic==1.7.3
+pylint==2.6.0
+python-dotenv==0.17.1
+toml==0.10.2
+wrapt==1.12.1
