@@ -1,0 +1,71 @@
+[MASTER]
+ignore-patterns=
+
+[MESSAGES CONTROL]
+enable=
+    # NO MORE PRINT STATEMENTS
+    print-statement
+    E
+
+disable=
+    # Remove from disable list soon
+    no-self-use,
+
+    # List comprehensions inside for-loops trip this one up
+    cell-var-from-loop,
+
+    # Don't error on TODOs
+    fixme,
+
+    # Line too longx
+    line-too-long,
+    # PyTest fixture files break this rule
+    redefined-outer-name,
+
+    # Don't require docstrings
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+
+    # Don't enforce snake case (directories should be platform keys which are camel)
+    invalid-name,
+
+    # Doesn't work with pydantic
+    no-name-in-module,
+
+    # Dont limit local variables/arguments/returns
+    too-many-locals,
+    too-many-arguments,
+    too-many-return-statements,
+    too-many-statements,
+    too-many-branches,
+
+    # Don't error on duplicate code (being caught on imports/platform fn defs/etc.)
+    duplicate-code,
+
+    # Don't error on child class having different args than super
+    arguments-differ,
+
+
+
+    # Other
+    raise-missing-from,
+    too-few-public-methods,
+
+[SIMILARITIES]
+
+# Minimum lines number of a similarity.
+min-similarity-lines=10
+
+# Ignore comments when computing similarities.
+ignore-comments=yes
+
+# Ignore docstrings when computing similarities.
+ignore-docstrings=yes
+
+# Ignore imports when computing similarities.
+ignore-imports=yes
+
+[DESIGN]
+# Allow deep class hierarchies (due to use of mixins)
+max-parents=20
