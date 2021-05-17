@@ -27,5 +27,4 @@ class Collector():
                 pass
 
     def parse(self, response, **kwargs):
-        raise NotImplementedError(
-            f'{self.__class__.__name__}.parse callback is not defined')
+        raise NotImplementedError()

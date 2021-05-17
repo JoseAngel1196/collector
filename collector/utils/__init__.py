@@ -3,13 +3,6 @@ from importlib import import_module
 
 
 def walk_modules(path):
-    """Loads a module and all its submodules from the given module path and
-    returns them. If *any* module throws an exception while importing, that
-    exception is thrown back.
-
-    For example: walk_modules('collector.utils')
-    """
-
     mods = []
     mod = import_module(path)
 
