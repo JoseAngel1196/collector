@@ -1,3 +1,6 @@
+from typing import Iterable, List
+from collector.core.http.request import Request
+from collector.core.http.downloader import Downloader
 from collector.core.collector import Collector
 from collector.core.stock_loader import StockLoader
 from collector.settings import Settings
@@ -12,6 +15,7 @@ class CollectorRunner():
         if isinstance(settings, dict) or settings is None:
             settings = Settings(settings)
         self.settings = settings
+        self.downloader = Downloader()
 
     def run(self):
         try:
@@ -19,11 +23,21 @@ class CollectorRunner():
                 self.settings.stock_name)
             self.collector = self._create_collector(self.collectorcls)
             start_requests = self.collector.start_requests()
+            self._open_collector(start_requests)
         except Exception as e:
-            raise
+            raise e
 
     def _create_collector(self, collectorcls) -> Collector:
         return collectorcls.from_runner()
+
+    def _open_collector(self, start_requests: List[Iterable]):
+        for start_request in start_requests:
+            request_proceeded = self._process_request(start_request)
+            print(request_proceeded.headers)
+
+    def _process_request(self, request: Request):
+        method = getattr(self.downloader, request.method)
+        return method(url=request.url)
 
 
 def execute():
