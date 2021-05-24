@@ -33,7 +33,7 @@ class CollectorRunner():
     def _open_collector(self, start_requests: List[Iterable]):
         for start_request in start_requests:
             request_proceeded = self._process_request(start_request)
-            print(request_proceeded.headers)
+            parsed_request = self.collector.parse(request_proceeded)
 
     def _process_request(self, request: Request):
         method = getattr(self.downloader, request.method)

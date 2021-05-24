@@ -1,3 +1,7 @@
+from collector.core.models.photo import Photo
+from typing import List
+
+
 class Collector():
     name: str
 
@@ -17,5 +21,8 @@ class Collector():
     def start_requests(self):
         raise NotImplementedError()
 
-    def parse(self, response, **kwargs):
+    def parse(self, response) -> List[Photo]:
+        raise NotImplementedError()
+
+    def process_results(self):
         raise NotImplementedError()
