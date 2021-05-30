@@ -14,11 +14,11 @@ class Photo(BaseModel):
     urls: Image
     likes: Optional[int]
 
-    # user: User
+    user: User
 
-    # tags: List[str] = []
-    # categories: Optional[List[str]]
+    tags: Optional[List[str]] = []
+    categories: Optional[List[str]]
 
-    # published_at: date
+    published_at: date
 
-    # stock_type: StockType
+    stock_type: StockType
