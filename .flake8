@@ -4,6 +4,7 @@ max-line-length = 88
 ignore =
     # W503: line break before binary operator; incompatible with black
     W503,
+    T001
 
 exclude = .git, venv, __pycache__
 
