@@ -1,13 +1,17 @@
+from collector.core.models.photo import Photo
+from collector.core.db_connector import DbConnector
 from typing import Iterable, List
+
 from collector.core.http.request import Request
 from collector.core.http.downloader import Downloader
 from collector.core.collector import Collector
 from collector.core.stock_loader import StockLoader
 from collector.settings import Settings
 from collector.utils.project import get_project_settings
+from collector.core.settings import DB_NAME, HOST, PASSWORD, PORT, USER
 
 
-class CollectorRunner():
+class CollectorRunner:
 
     stock_loader = StockLoader()
 
@@ -16,11 +20,13 @@ class CollectorRunner():
             settings = Settings(settings)
         self.settings = settings
         self.downloader = Downloader()
+        self.db = DbConnector(
+            dbname=DB_NAME, user=USER, pswd=PASSWORD, host=HOST, port=PORT
+        )
 
     def run(self):
         try:
-            self.collectorcls = self.stock_loader.load(
-                self.settings.stock_name)
+            self.collectorcls = self.stock_loader.load(self.settings.stock_name)
             self.collector = self._create_collector(self.collectorcls)
             start_requests = self.collector.start_requests()
             self._open_collector(start_requests)
@@ -38,6 +44,9 @@ class CollectorRunner():
     def _process_request(self, request: Request):
         method = getattr(self.downloader, request.method)
         return method(url=request.url)
+
+    def _save_request(self, photos: List[Photo]):
+        pass
 
 
 def execute():
