@@ -128,5 +128,21 @@ REFERENCES photos(photo_id)
 ON DELETE CASCADE;
  """
 
+query_3_6_2021 = """
+ALTER TABLE users
+ADD COLUMN photo_id uuid;
+
+ALTER TABLE users
+ADD CONSTRAINT fk_user_photo
+FOREIGN KEY (photo_id)
+REFERENCES photos(photo_id)
+ON DELETE CASCADE;
+"""
+
+query_3_7_2021 = """
+ALTER TABLE photos
+RENAME COLUMN categoris TO categories;
+ """
+
 if __name__ == "__main__":
-    execute_query(create_table_query)
+    execute_query(query_3_7_2021)

@@ -4,20 +4,17 @@ from pydantic import BaseModel
 
 from collector.core.models.image import Image
 from collector.core.models.user import User
-from collector.core.enums import StockType
 
 
 class Photo(BaseModel):
-    title: Optional[str]
-    description: Optional[str]
-    urls: Image
-    likes: Optional[int]
+    title: Optional[str] = "NULL"
+    description: Optional[str] = "NULL"
+    photo_image: Image
+    likes: Optional[int] = "NULL"
 
     user: User
 
-    tags: Optional[List[str]] = []
-    categories: Optional[List[str]]
+    tags: Optional[List[str]] = "NULL"
+    categories: Optional[List[str]] = "NULL"
 
-    published_at: date
-
-    stock_type: StockType
+    published_at: Optional[date] = "NULL"

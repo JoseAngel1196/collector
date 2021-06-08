@@ -8,7 +8,7 @@ class User(BaseModel):
     username: str
     first_name: str
     last_name: str
-    portfolio_url: str
+    portfolio_url: Optional[str]
     bio: str
     profile_image: Image
 

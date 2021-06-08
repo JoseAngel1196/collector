@@ -1,27 +1,30 @@
+from typing import Iterable
+
+from collector.logger import CollectorLogger
 from collector.core.models.photo import Photo
-from typing import List
 
 
-class Collector():
+class Collector:
     name: str
 
-    def __init__(self, name=None):
+    logger: CollectorLogger
+
+    def __init__(self, logger: CollectorLogger, name: str = None):
+        self.logger = logger
+
         if name is not None:
             self.name = name
-        elif not getattr(self, 'name', None):
-            raise ValueError(f'{type(self).__name__} must have a name')
-
-        if not hasattr(self, 'start_urls'):
-            self.start_urls = []
+        elif not getattr(self, "name", None):
+            raise ValueError(f"{type(self).__name__} must have a name")
 
     @classmethod
-    def from_runner(cls):
-        return cls()
+    def from_runner(cls, logger: CollectorLogger):
+        return cls(logger=logger)
 
     def start_requests(self):
         raise NotImplementedError()
 
-    def parse(self, response) -> List[Photo]:
+    def parse(self, response) -> Iterable[Photo]:
         raise NotImplementedError()
 
     def process_results(self):

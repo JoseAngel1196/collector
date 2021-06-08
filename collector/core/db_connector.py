@@ -1,23 +1,34 @@
+from collector.logger import CollectorLogger
 from psycopg2 import connect
 from psycopg2.extras import DictConnection
 
 
 class DbConnector:
-    def __init__(self, dbname, user=None, pswd=None, host=None, port=None):
+    logger: CollectorLogger
+
+    def __init__(
+        self,
+        dbname: str,
+        user: str,
+        pswd: str,
+        host: str,
+        port: str,
+        logger: CollectorLogger,
+    ):
         self.dbname = dbname
         self.user = user
         self.pswd = pswd
         self.host = host
         self.port = port
         self.conn = None
+        self.logger = logger
 
     def connect(self):
         """Connect to the database"""
+        connect_db = f"host={self.host} port={self.port} dbname={self.dbname} user={self.user} password={self.pswd}"
         try:
-            self.conn = connect(
-                (self.host, self.port, self.dbname, self.user, self.pswd),
-                connection_factory=DictConnection,
-            )
+            self.conn = connect(connect_db)
+            self.logger.info("Connected to the db", self.conn)
         except Exception as exc:
             raise exc
 
@@ -25,10 +36,12 @@ class DbConnector:
         """Close the database connection"""
         if self.conn and not self.conn.closed:
             self.conn.close()
+        self.logger.info("Closed connection")
         self.conn = None
 
     def commit(self):
         """Commit currently open transaction"""
+        self.logger.info("Commiting")
         self.conn.commit()
 
     def rollback(self):
